@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0f766e">
+<title>Ulangan Online Ekonomi - Jujur Yang Utama</title>
+<style>
+:root{--p:#0f766e;--p2:#14b8a6;--bg:#f0fdfa;--ink:#173b3a;--muted:#64748b;--red:#dc2626}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:linear-gradient(180deg,#ecfeff,#f8fafc 45%,#f1f5f9);color:var(--ink);user-select:none}
+button,input,select,textarea{font:inherit}
+.container{width:min(1050px,calc(100% - 28px));margin:auto}
+.hero{color:#fff;background:linear-gradient(135deg,#064e3b,#0f766e 55%,#14b8a6);padding:34px 0 70px}
+.hero-grid{display:flex;gap:18px;align-items:center}.logo{width:66px;height:66px;border-radius:20px;background:#ffffff26;display:grid;place-items:center;font-size:32px}
+h1{font-size:clamp(25px,5vw,42px);margin:0;line-height:1.15}.hero p{margin:9px 0 0;opacity:.92}.teacher{margin-top:9px;font-weight:900}
+.card{background:#fff;border:1px solid #dbe7e6;border-radius:22px;box-shadow:0 15px 45px #0f766e12}
+.identity{max-width:700px;margin:-38px auto 28px;padding:24px;position:relative}.identity h2{margin:0 0 5px}
+label{display:block;font-weight:800;margin:17px 0 7px}
+input,select,textarea{width:100%;border:2px solid #d9e4e3;border-radius:14px;padding:13px 14px;outline:none;background:#fbffff;transition:.2s}
+input:focus,select:focus,textarea:focus{border-color:var(--p2);box-shadow:0 0 0 4px #14b8a61f}
+.primary{border:0;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;padding:14px 18px;border-radius:14px;font-weight:900;cursor:pointer}
+.full{width:100%;margin-top:20px}.primary:disabled{opacity:.45;cursor:not-allowed}.note{font-size:12px;color:var(--muted);line-height:1.6}
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.rule{padding:12px;border-radius:14px;background:#f0fdfa;font-size:12px;font-weight:800;color:#115e59}
+#exam{display:none;padding-bottom:60px}.sticky{position:sticky;top:0;z-index:20;padding:10px 0;background:#f0fdfaeb;backdrop-filter:blur(12px)}
+.progress-card{padding:13px 16px}.progress-line{display:flex;align-items:center;gap:12px}.progress{height:10px;flex:1;background:#dbeafe;border-radius:99px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2563eb,var(--p2));transition:.25s}
+.progress-text{font-weight:900;font-size:13px;min-width:70px}.student{margin:16px 0;padding:14px 17px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.question{padding:21px;margin:15px 0}.qtop{display:flex;gap:13px}.num{width:39px;height:39px;flex:none;border-radius:13px;background:#ccfbf1;color:var(--p);display:grid;place-items:center;font-weight:950}
+.qbody{flex:1}.chapter{display:inline-block;font-size:11px;font-weight:900;padding:5px 9px;border-radius:99px;background:#eff6ff;color:#1d4ed8;margin-bottom:8px}.qbody h2{font-size:17px;line-height:1.55;margin:0 0 13px}
+textarea{min-height:140px;resize:vertical;user-select:text}.valid{border-color:#22c55e;background:#f7fff9}.invalid{border-color:#ef4444;background:#fff7f7}
+.meta{display:flex;justify-content:space-between;margin-top:7px;font-size:11px;color:var(--muted)}.error{display:none;color:var(--red);font-size:11px;font-weight:800;margin-top:5px}
+.submit{padding:22px;margin-top:20px}.summary{display:none;padding:14px;border-radius:14px;background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;font-weight:800}
+#success{display:none;max-width:700px;margin:30px auto 70px;padding:48px 25px;text-align:center}.success-icon{font-size:58px}.success-title{font-size:28px;font-weight:950;margin:10px 0}
+footer{padding:28px 0 40px;text-align:center;color:#64748b;font-size:12px}
+@media(max-width:700px){.container{width:min(100% - 18px,1050px)}.hero{padding:25px 0 54px}.logo{width:52px;height:52px;border-radius:16px;font-size:25px}.rules{grid-template-columns:1fr}.identity{margin-top:-28px;padding:18px}.question{padding:16px;border-radius:17px}.qtop{gap:9px}.num{width:34px;height:34px}.qbody h2{font-size:16px}textarea{min-height:155px}}
+@media print{.sticky,#identity,#exam .submit,footer{display:none!important}.question{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body oncontextmenu="return false">
+<header class="hero"><div class="container hero-grid"><div class="logo">📊</div><div><h1>Ulangan Online Ekonomi</h1><p><strong>Jujur Yang Utama</strong> • Kelas X</p><div class="teacher">Suparno, S.Pd</div></div></div></header>
+
+<main class="container">
+<section id="identity" class="identity card">
+<h2>👋 Selamat Mengerjakan!</h2><p class="note">Isi identitas dengan benar. Jawablah seluruh soal menggunakan pemahaman sendiri.</p>
+<label for="nama">👤 Nama Lengkap</label><input id="nama" maxlength="100" autocomplete="off" placeholder="Masukkan nama lengkap">
+<label for="kelas">🏫 Kelas</label><select id="kelas"><option value="">— Pilih kelas —</option><option>10.1</option><option>10.2</option><option>10.3</option><option>10.4</option><option>10.5</option><option>10.6</option></select>
+<div class="rules"><div class="rule">✍️ 20 soal uraian</div><div class="rule">🔢 Minimal 20 karakter/soal</div><div class="rule">☁️ Tersimpan ke Spreadsheet</div></div>
+<button id="startBtn" class="primary full" onclick="startExam()">🚀 Mulai Ulangan</button>
+<p class="note">Setelah mulai, identitas tidak dapat diganti dari halaman ini.</p>
+</section>
+
+<section id="exam">
+<div class="sticky"><div class="container card progress-card"><div class="progress-line"><div class="progress-text" id="progressText">0/20</div><div class="progress"><i id="progressBar"></i></div><div style="font-size:12px;font-weight:800">terjawab</div></div></div></div>
+<div id="studentBadge" class="student card"></div><div id="questions"></div>
+<div class="submit card"><div id="summary" class="summary"></div><button id="submitBtn" class="primary full" onclick="submitExam()" disabled>📤 Kirim Jawaban</button><p class="note">Tombol kirim aktif hanya jika seluruh 20 jawaban memenuhi minimal 20 karakter.</p></div>
+</section>
+
+<section id="success" class="card"><div class="success-icon">🎉</div><div class="success-title">Jawaban Berhasil Dikirim</div><p id="successText"></p><p class="note">Terima kasih sudah mengerjakan dengan jujur.</p></section>
+</main>
+<footer>Ulangan Online Ekonomi • Jujur Yang Utama • Suparno, S.Pd</footer>
+
+<script>
+const SCRIPT_URL="GANTI_DENGAN_URL_WEB_APP_APPS_SCRIPT";
+const questions=[{"q": "Jelaskan asal usul kata \"ekonomi\" beserta artinya!", "bab": "Bab 1 • Pengertian & Sejarah Ilmu Ekonomi"}, {"q": "Sebutkan 3 pokok pikiran utama dari berbagai definisi ilmu ekonomi menurut para ahli!", "bab": "Bab 1 • Pengertian & Sejarah Ilmu Ekonomi"}, {"q": "Siapakah tokoh yang dikenal sebagai pencetus ilmu ekonomi pertama kali dan apa judul bukunya?", "bab": "Bab 1 • Pengertian & Sejarah Ilmu Ekonomi"}, {"q": "Jelaskan pengertian ilmu ekonomi menurut Lionel Robbins!", "bab": "Bab 1 • Pengertian & Sejarah Ilmu Ekonomi"}, {"q": "Apa tujuan utama dipelajarinya ilmu ekonomi?", "bab": "Bab 1 • Pengertian & Sejarah Ilmu Ekonomi"}, {"q": "Jelaskan apa yang dimaksud dengan kelangkaan (scarcity) dalam ilmu ekonomi!", "bab": "Bab 2 • Kelangkaan & Kebutuhan Manusia"}, {"q": "Sebutkan 5 faktor penyebab terjadinya kelangkaan sumber daya ekonomi!", "bab": "Bab 2 • Kelangkaan & Kebutuhan Manusia"}, {"q": "Bagaimana letak geografis dapat menyebabkan kelangkaan di suatu daerah?", "bab": "Bab 2 • Kelangkaan & Kebutuhan Manusia"}, {"q": "Jelaskan perbedaan mendasar antara kebutuhan primer, sekunder, dan tersier!", "bab": "Bab 2 • Kelangkaan & Kebutuhan Manusia"}, {"q": "Berikan 3 contoh kebutuhan yang bersifat jasmani!", "bab": "Bab 2 • Kelangkaan & Kebutuhan Manusia"}, {"q": "Jelaskan definisi dari sistem ekonomi!", "bab": "Bab 3 • Sistem Ekonomi"}, {"q": "Mengapa setiap negara di dunia tidak menerapkan sistem ekonomi yang sama persis?", "bab": "Bab 3 • Sistem Ekonomi"}, {"q": "Apa ciri utama sistem transaksi pada sistem ekonomi tradisional?", "bab": "Bab 3 • Sistem Ekonomi"}, {"q": "Mengapa sistem ekonomi pasar/liberal sering memunculkan kesenjangan sosial yang tajam?", "bab": "Bab 3 • Sistem Ekonomi"}, {"q": "Sebutkan 2 kelebihan utama dari sistem ekonomi komando!", "bab": "Bab 3 • Sistem Ekonomi"}, {"q": "Jelaskan apa yang dimaksud dengan literasi finansial!", "bab": "Bab 4 • Literasi Keuangan & Skala Prioritas"}, {"q": "Mengapa pandangan bahwa \"literasi keuangan hanya diperlukan oleh orang kaya\" adalah pandangan yang sangat keliru?", "bab": "Bab 4 • Literasi Keuangan & Skala Prioritas"}, {"q": "Sebutkan 3 manfaat utama literasi finansial bagi kehidupan seorang individu!", "bab": "Bab 4 • Literasi Keuangan & Skala Prioritas"}, {"q": "Apa perbedaan antara penghasilan kotor dan penghasilan bersih (Earning)?", "bab": "Bab 4 • Literasi Keuangan & Skala Prioritas"}, {"q": "Mengapa membuat catatan anggaran belanja (Spending) dianggap sangat penting?", "bab": "Bab 4 • Literasi Keuangan & Skala Prioritas"}];
+let submitted=false;
+
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+function startExam(){
+ const nama=document.getElementById("nama").value.trim(), kelas=document.getElementById("kelas").value;
+ if(nama.length<2){alert("Nama lengkap wajib diisi.");return}
+ if(!kelas){alert("Silakan pilih kelas.");return}
+ document.getElementById("identity").style.display="none";document.getElementById("exam").style.display="block";
+ document.getElementById("studentBadge").innerHTML="👤 <b>"+esc(nama)+"</b><span>🏫 Kelas <b>"+esc(kelas)+"</b></span>";
+ renderQuestions();window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function renderQuestions(){
+ document.getElementById("questions").innerHTML=questions.map((x,i)=>`
+ <article class="question card"><div class="qtop"><div class="num">${i+1}</div><div class="qbody">
+ <div class="chapter">${esc(x.bab)}</div><h2>${esc(x.q)}</h2>
+ <textarea id="ans${i}" maxlength="2500" spellcheck="false" placeholder="Tuliskan jawabanmu dengan jelas..." oninput="validateOne(${i})"></textarea>
+ <div class="meta"><span>Minimal 20 karakter</span><span><b id="cnt${i}">0</b>/2500</span></div>
+ <div class="error" id="err${i}">Jawaban belum mencapai 20 karakter.</div>
+ </div></div></article>`).join("");
+ updateProgress();
+}
+function validateOne(i){
+ const el=document.getElementById("ans"+i), len=el.value.trim().length;
+ document.getElementById("cnt"+i).textContent=el.value.length;
+ const err=document.getElementById("err"+i);
+ if(len>=20){el.classList.add("valid");el.classList.remove("invalid");err.style.display="none"}
+ else{el.classList.remove("valid");if(el.value.length)el.classList.add("invalid");else el.classList.remove("invalid");err.style.display=el.value.length?"block":"none"}
+ updateProgress();
+}
+function updateProgress(){
+ let done=0;for(let i=0;i<20;i++){let e=document.getElementById("ans"+i);if(e&&e.value.trim().length>=20)done++}
+ document.getElementById("progressText").textContent=done+"/20";document.getElementById("progressBar").style.width=(done/20*100)+"%";
+ document.getElementById("submitBtn").disabled=done!==20;
+ document.getElementById("summary").style.display=done===20?"block":"none";
+ if(done===20)document.getElementById("summary").textContent="✅ Semua jawaban sudah memenuhi batas minimal. Periksa kembali sebelum mengirim.";
+}
+async function submitExam(){
+ if(submitted)return;updateProgress();
+ if(document.getElementById("submitBtn").disabled){alert("Masih ada jawaban yang kosong atau kurang dari 20 karakter.");return}
+ if(SCRIPT_URL.includes("GANTI_DENGAN")){alert("URL Google Apps Script belum dipasang oleh guru.");return}
+ if(!confirm("Yakin ingin mengirim semua jawaban? Setelah dikirim, halaman ini tidak dapat mengirim ulang."))return;
+ const btn=document.getElementById("submitBtn");btn.disabled=true;btn.textContent="⏳ Mengirim...";
+ const payload={nama:document.getElementById("nama").value.trim(),kelas:document.getElementById("kelas").value,waktu:new Date().toISOString(),jawaban:questions.map((_,i)=>document.getElementById("ans"+i).value.trim())};
+ try{
+  await fetch(SCRIPT_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+  submitted=true;document.getElementById("exam").style.display="none";document.getElementById("success").style.display="block";
+  document.getElementById("successText").textContent="Terima kasih, "+payload.nama+". Jawaban kelas "+payload.kelas+" telah dikirim.";
+  window.scrollTo({top:0,behavior:"smooth"});
+ }catch(e){btn.disabled=false;btn.textContent="📤 Kirim Jawaban";alert("Pengiriman gagal. Periksa internet dan URL Apps Script.")}
+}
+
+/* Proteksi dasar browser. Ini bukan keamanan absolut. */
+["copy","cut","paste","dragstart"].forEach(ev=>document.addEventListener(ev,e=>e.preventDefault()));
+document.addEventListener("selectstart",e=>{if(!["TEXTAREA","INPUT"].includes(e.target.tagName))e.preventDefault()});
+document.addEventListener("keydown",e=>{
+ const k=e.key.toLowerCase();
+ if((e.ctrlKey||e.metaKey)&&["c","x","v","u","s","a","p"].includes(k))e.preventDefault();
+ if(e.key==="F12"||(e.ctrlKey&&e.shiftKey&&["i","j","c"].includes(k)))e.preventDefault();
+});
+</script>
+</body></html>
