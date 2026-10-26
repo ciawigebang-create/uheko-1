@@ -39,13 +39,26 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
     }
+      /* Mode baca: beri materi seluruh ruang layar dan jadikan daftar bab sebagai drawer. */
+    body.reader-mode { height: 100vh; height: 100dvh; overflow: hidden; }
+    body.reader-mode > header { height: 52px !important; }
+    body.reader-mode #menuButton { display: grid !important; }
+    body.reader-mode .reader-header-status { display: none !important; }
+    body.reader-mode .reader-home-button { display: inline-flex !important; }
+    body.reader-mode #sidebar { top: 52px; transform: translateX(-105%) !important; }
+    body.reader-mode #sidebar.open { transform: translateX(0) !important; }
+    body.reader-mode #mainContent { margin-left: 0 !important; padding-top: 52px; height: 100vh; height: 100dvh; min-height: 0; overflow: hidden; }
+    body.reader-mode #chapterView:not(.hidden) { display: flex; flex-direction: column; width: 100%; height: calc(100vh - 52px); height: calc(100dvh - 52px); margin: 0; padding: 0 !important; overflow: hidden; }
+    body.reader-mode #chapterView .chapter-reader-title { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    body.reader-mode #chapterView > p { display: none !important; }
+    body.reader-mode #chapterFrame { display: block; flex: 1 1 0; width: 100%; height: auto; min-height: 0; border: 0; background: #f8fafc; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-indigo-200">
   <a class="skip-link rounded-xl bg-yellow-300 px-4 py-3 font-bold text-slate-950 shadow-lg" href="#mainContent">Lewati ke konten utama</a>
   <header class="fixed inset-x-0 top-0 z-50 h-16 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
     <div class="flex h-full items-center gap-3 px-3 sm:px-5">
-      <button id="menuButton" type="button" class="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-xl text-slate-700 hover:bg-slate-100 lg:hidden" aria-label="Buka navigasi bab" aria-controls="sidebar" aria-expanded="false">☰</button>
+      <button id="menuButton" type="button" class="grid h-11 w-11 shrink-0 place-items-center rounded-xl border border-slate-200 bg-white text-xl text-slate-700 hover:bg-slate-100 lg:hidden" aria-label="Buka atau tutup daftar bab" aria-controls="sidebar" aria-expanded="false">☰</button>
       <a href="#home" id="brandHome" class="flex min-w-0 items-center gap-3 rounded-xl text-left focus-visible:outline-offset-2" aria-label="Ruang Ekonomi, kembali ke dashboard">
         <span class="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-blue-600 to-violet-600 text-lg font-black text-white shadow-md shadow-indigo-200">E</span>
         <span class="min-w-0">
@@ -53,10 +66,11 @@
           <span class="mobile-hide block text-[11px] font-semibold text-slate-500">Modul belajar mandiri · SMA</span>
         </span>
       </a>
-      <div class="ml-auto hidden items-center gap-2 sm:flex">
+      <div class="ml-auto hidden items-center gap-2 sm:flex reader-header-status">
         <span class="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-800">● Siap dipelajari</span>
         <span class="hidden rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-600 md:inline">4 bab interaktif</span>
       </div>
+      <button id="backHomeButton" class="reader-home-button hidden ml-auto min-h-10 shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-sm hover:bg-slate-100 sm:text-sm" type="button"><span aria-hidden="true">←</span> Beranda</button>
     </div>
   </header>
 
@@ -103,7 +117,7 @@
         <div class="absolute -bottom-28 right-1/4 -z-10 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl"></div>
         <div class="grid items-center gap-8 lg:grid-cols-[1.2fr_.8fr]">
           <div>
-            <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-bold text-indigo-100"><span class="h-2 w-2 rounded-full bg-emerald-300"></span> EKONOMI SMA · MODUL DIGITAL - SUPARNO- SMAN 1 CIDAHU</div>
+            <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-bold text-indigo-100"><span class="h-2 w-2 rounded-full bg-emerald-300"></span> EKONOMI SMA · MODUL DIGITAL</div>
             <h1 id="welcomeTitle" class="mt-5 max-w-2xl text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">Pahami ekonomi dari kehidupan sehari-hari.</h1>
             <p class="mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">Jelajahi empat bab interaktif. Pelajari konsep, amati ilustrasi, coba simulasi, dan cek pemahamanmu dengan latihan di setiap bab.</p>
             <div class="mt-7 flex flex-wrap gap-3">
@@ -174,12 +188,12 @@
     </section>
 
     <section id="chapterView" class="hidden px-3 pb-4 pt-3 sm:px-5" aria-labelledby="chapterTitle">
-      <div class="mb-3 flex flex-wrap items-center justify-between gap-2">
+      <div class="chapter-reader-title mb-3 flex flex-wrap items-center justify-between gap-2">
         <div class="min-w-0">
           <p id="chapterKicker" class="text-[10px] font-extrabold uppercase tracking-[.17em] text-indigo-600">MODUL EKONOMI</p>
           <h1 id="chapterTitle" class="truncate text-base font-extrabold text-slate-900 sm:text-lg">Bab</h1>
         </div>
-        <button id="backHomeButton" class="inline-flex min-h-10 shrink-0 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-bold text-slate-700 shadow-sm hover:bg-slate-100 sm:text-sm" type="button"><span aria-hidden="true">←</span> Beranda</button>
+        
       </div>
       <iframe id="chapterFrame" title="Modul bab ekonomi" sandbox="allow-scripts allow-same-origin allow-forms allow-modals allow-downloads" referrerpolicy="strict-origin-when-cross-origin"></iframe>
       <p class="px-1 pt-2 text-center text-[10px] leading-relaxed text-slate-500">Menu di dalam modul mengatur materi, simulasi, dan latihan. Menu di sisi kiri berpindah antar-bab.</p>
@@ -238,6 +252,29 @@
         for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
         return new TextDecoder('utf-8').decode(bytes);
       }
+      function tuneEmbeddedLayout() {
+        if (frame._readerResizeObserver) frame._readerResizeObserver.disconnect();
+        const embedded = frame.contentDocument;
+        if (!embedded || !embedded.head) return;
+        let adjustment = embedded.getElementById('dashboard-reader-adjustments');
+        if (!adjustment) {
+          adjustment = embedded.createElement('style');
+          adjustment.id = 'dashboard-reader-adjustments';
+          adjustment.textContent = 'header.sticky { z-index: 60 !important; } .sticky[class*="top-["] { top: var(--dashboard-sticky-offset, 64px) !important; }';
+          embedded.head.appendChild(adjustment);
+        }
+        const stickyHeader = embedded.querySelector('header.sticky');
+        const syncStickyOffset = function () {
+          const offset = stickyHeader ? Math.ceil(stickyHeader.getBoundingClientRect().height) : 64;
+          embedded.documentElement.style.setProperty('--dashboard-sticky-offset', offset + 'px');
+        };
+        syncStickyOffset();
+        if (window.ResizeObserver && stickyHeader) {
+          frame._readerResizeObserver = new ResizeObserver(syncStickyOffset);
+          frame._readerResizeObserver.observe(stickyHeader);
+        }
+      }
+      frame.addEventListener('load', tuneEmbeddedLayout);
       function setActiveNav(key) {
         document.querySelectorAll('.nav-link').forEach(function (link) {
           const active = key === 'home' ? link.dataset.page === 'home' : link.dataset.chapter === key;
@@ -260,6 +297,7 @@
         document.getElementById('closeMenuButton').focus();
       }
       function showHome(updateUrl) {
+        document.body.classList.remove('reader-mode');
         dashboard.classList.remove('hidden');
         chapterView.classList.add('hidden');
         activeChapter = '';
@@ -274,6 +312,7 @@
         if (!modules[key]) return;
         dashboard.classList.add('hidden');
         chapterView.classList.remove('hidden');
+        document.body.classList.add('reader-mode');
         title.textContent = modules[key].title;
         kicker.textContent = modules[key].short;
         setActiveNav(key);
@@ -289,8 +328,7 @@
           saveVisited();
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        document.getElementById('chapterTitle').setAttribute('tabindex', '-1');
-        document.getElementById('chapterTitle').focus({ preventScroll: true });
+        frame.focus({ preventScroll: true });
       }
       document.querySelectorAll('[data-chapter]').forEach(function (button) {
         button.addEventListener('click', function () { openChapter(button.dataset.chapter, true); });
